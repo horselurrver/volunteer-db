@@ -76,11 +76,15 @@ app.post('/submitform', function(req, res) {
   const location = req.body.location;
   const hours = req.body.hours;
   const organization = req.body.organization;
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
   const newForm = new Form({
     studentName: studentName,
     location: location,
     hours: hours,
-    organization: organization
+    organization: organization,
+    startdate: startdate,
+    enddate: enddate
   });
   newForm.save(function(err, form) {
     if (err) {
