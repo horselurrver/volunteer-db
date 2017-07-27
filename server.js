@@ -61,6 +61,16 @@ app.post('/login', function(req, res) {
   });
 });
 
+app.get('/students', function(req, res) {
+  Student.find({}, function(err, students) {
+    if (err) {
+      res.json({success: false, error: err});
+    } else {
+      res.json({success: true, students: students});
+    }
+  });
+});
+
 app.post('/submitform', function(req, res) {
   const studentName = req.body.studentName;
   const location = req.body.location;
