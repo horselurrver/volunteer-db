@@ -21,7 +21,9 @@ var formSchema = new Schema({
   studentName: String,
   location: String,
   hours: Number,
-  organization: String
+  organization: String,
+  startdate: Date,
+  enddate: Date
 });
 
 var Student = mongoose.model('Student', studentSchema);
