@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const models = require('./models/models');
 const { Student, Form } = models;
-
+const nodemailer = require('nodemailer');
+let smtpTransport = require("nodemailer-smtp-transport");
 mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on('connected', function () {
@@ -26,6 +27,15 @@ app.listen(process.env.PORT || 3000, function () {
   console.log('Example app listening on port 3000!');
 })
 
+smtpTransport = nodemailer.createTransport(smtpTransport({
+    host : "smtp.gmail.com",
+    secureConnection : false,
+    port: 587,
+    auth : {
+        user : "easy.hours.demo@gmail.com",
+        pass : "easyhoursdemo911!!!"
+    }
+}));
 
 //register, login, submit form
 app.post('/register', function(req, res) {
@@ -78,6 +88,22 @@ app.post('/submitform', function(req, res) {
   const organization = req.body.organization;
   const startdate = req.body.startdate;
   const enddate = req.body.enddate;
+  const mailOptions = {
+        from: "easy.hours.demo@gmail.com", // sender address
+        to: 'thepalakagarwal@gmail.com', // list of receivers
+        subject: 'Volunteer Hours Submission', // Subject line
+        text: studentName + " has submitted " + hours + " service hours for " + organization + " from " + startdate + " to " + enddate, // plaintext body
+        html: "<p>" + studentName + " has submitted " + hours + " service hours for " + organization + " from " + startdate + " to " + enddate + "</p>"// html body
+  };
+  smtpTransport.sendMail(mailOptions, function(error, info){
+    if (error) {
+        return console.log('error' + error);
+      } else {
+        console.log('Message sent: ' + info.response);
+      }
+        //smtpTransport.close();
+        //res.render("send", { success: "building web app" });
+    });
   const newForm = new Form({
     studentName: studentName,
     location: location,
