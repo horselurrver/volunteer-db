@@ -88,12 +88,13 @@ app.post('/submitform', function(req, res) {
   const organization = req.body.organization;
   const startdate = req.body.startdate;
   const enddate = req.body.enddate;
+  const imageUrl = req.body.imageUrl;
   const mailOptions = {
         from: "easy.hours.demo@gmail.com", // sender address
         to: 'thepalakagarwal@gmail.com', // list of receivers
         subject: 'Volunteer Hours Submission', // Subject line
         text: studentName + " has submitted " + hours + " service hours for " + organization + " from " + startdate + " to " + enddate, // plaintext body
-        html: "<p>" + studentName + " has submitted " + hours + " service hours for " + organization + " from " + startdate + " to " + enddate + "</p>"// html body
+        html: "<p>" + studentName + " has submitted " + hours + " service hours for " + organization + " from " + startdate + " to " + enddate + "</p><br/><img src='" + "data:image/png;base64, " + imageUrl + "'/>"// html body
   };
   smtpTransport.sendMail(mailOptions, function(error, info){
     if (error) {
