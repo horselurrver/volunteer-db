@@ -23,7 +23,8 @@ var formSchema = new Schema({
   hours: Number,
   organization: String,
   startdate: Date,
-  enddate: Date
+  enddate: Date,
+  imageUrl: String
 });
 
 var Student = mongoose.model('Student', studentSchema);

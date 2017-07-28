@@ -110,7 +110,8 @@ app.post('/submitform', function(req, res) {
     hours: hours,
     organization: organization,
     startdate: startdate,
-    enddate: enddate
+    enddate: enddate,
+    imageUrl: imageUrl
   });
   newForm.save(function(err, form) {
     if (err) {
